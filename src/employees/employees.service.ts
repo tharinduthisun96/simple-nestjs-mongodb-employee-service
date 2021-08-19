@@ -15,14 +15,14 @@ export class EmployeesService {
 
     createEmployee(employeeCreateDto: EmployeeCreateDto){
         //distraction feature 
-        const {firstName,lastName,designation,nearestCity,tire} = employeeCreateDto;
+        const {firstName,lastName,designation,nearestCity,tier} = employeeCreateDto;
         const employee = {
             id:uuid(),
             firstName,
             lastName,
             designation,
             nearestCity,
-            tire,
+            tier,
             status: EmployeeStatus.ACTIVE
         }
         this.employees.push(employee);

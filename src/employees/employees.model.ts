@@ -4,7 +4,7 @@ export interface Employee{
     lastName: string
     designation: string
     nearestCity: string
-    tire: EmployeeTier
+    tier: EmployeeTier
     status: EmployeeStatus
 }
 

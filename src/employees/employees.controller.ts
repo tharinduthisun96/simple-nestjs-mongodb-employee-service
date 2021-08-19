@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Employee } from './employees.model';
 import { EmployeesService } from './employees.service';
 import { EmployeeCreateDto } from './dto/EmployeeCreate';
 import { EmployeeUpdateDto } from './dto/EmployeeUpdateDto'
+import { EmployeeTireValidationPipe } from 'src/employee-tire-validation.pipe';
 
 @Controller('employees')
 export class EmployeesController {
@@ -15,6 +16,8 @@ export class EmployeesController {
     }
 
     @Post()
+    @UsePipes(ValidationPipe)
+    @UsePipes(new EmployeeTireValidationPipe)
     createEmployee(@Body() employeeCreateDto:EmployeeCreateDto): Employee{
         return this.employeeService.createEmployee(employeeCreateDto);
     }
