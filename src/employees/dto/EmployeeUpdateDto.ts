@@ -1,6 +1,6 @@
 import { EmployeeStatus, EmployeeTier } from '../employees.model';
 
-export interface EmployeeUpdateDto{
+export class EmployeeUpdateDto{
     id: string
     firstName: string
     lastName: string

@@ -1,6 +1,6 @@
 import { EmployeeTier } from '../employees.model';
 
-export interface EmployeeCreateDto{
+export class EmployeeCreateDto{
     firstName: string
     lastName: string
     designation: string
