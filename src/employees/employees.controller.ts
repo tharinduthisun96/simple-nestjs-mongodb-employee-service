@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { Employee } from './employees.model';
 import { EmployeesService } from './employees.service';
 import { EmployeeCreateDto } from './dto/EmployeeCreate';
+import { EmployeeUpdateDto } from './dto/EmployeeUpdateDto'
 
 @Controller('employees')
 export class EmployeesController {
@@ -15,7 +16,16 @@ export class EmployeesController {
 
     @Post()
     createEmployee(@Body() employeeCreateDto:EmployeeCreateDto): Employee{
-        console.log(employeeCreateDto);
         return this.employeeService.createEmployee(employeeCreateDto);
+    }
+
+    @Get('/:id')
+    getEmployeeById(@Param('id') id: string){
+        return this.employeeService.getEmployeeById(id);
+    }
+
+    @Put()
+    updateEmployee(@Body() employeeUpdateDto:EmployeeUpdateDto): Employee{
+        return this.employeeService.updateEmployee(employeeUpdateDto);
     }
 }
