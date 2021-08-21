@@ -1,24 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { EmployeeCreateDto } from './dto/EmployeeCreate';
 import { EmployeeUpdateDto } from './dto/EmployeeUpdateDto';
-import { Employee } from './employees.model';
+import { Employee } from './schemas/employees.model';
 import { EmployeeStatus } from './enum/employee.enum';
-import {v1 as uuid} from 'uuid';
+import { EmployeeRepository } from './repository/Employee.repository';
 
 @Injectable()
 export class EmployeesService {
 
     private employees:Employee[] = [];
 
-    getAllEmployees(){
-        return this.employees;
+    constructor(private employeeRepository: EmployeeRepository){}
+
+    async getAllEmployees(): Promise<Employee[]>{
+        return await this.employeeRepository.findAll();
     }
 
-    createEmployee(employeeCreateDto: EmployeeCreateDto){
+    async createEmployee(employeeCreateDto: EmployeeCreateDto): Promise<Employee>{
         //distraction feature 
         const {firstName,lastName,designation,nearestCity,tier} = employeeCreateDto;
         const employee = {
-            id:uuid(),
             firstName,
             lastName,
             designation,
@@ -26,26 +27,16 @@ export class EmployeesService {
             tier,
             status: EmployeeStatus.ACTIVE
         }
-        this.employees.push(employee);
-        return employee;
-    }
-
-    getEmployeeById(id: string): Employee{
-        return this.employees.find(e => e.id === id);
-    }
-
-    updateEmployee(employeeUpdateDto:EmployeeUpdateDto) : Employee{
-        const {id,firstName,lastName,designation,nearestCity} = employeeUpdateDto;
-        const employee = this.employees.find(e => e.id === id);
-        employee.firstName = firstName;
-        employee.lastName = lastName;
-        employee.designation = designation;
-        employee.nearestCity = nearestCity;
         
-        return employee;
+        return await this.employeeRepository.create(employee);
+    }
 
+    async getEmployeeById(id: string): Promise<Employee>{
+        return await this.employeeRepository.findById(id);
+    }
 
-
+    async updateEmployee(employeeUpdateDto:EmployeeUpdateDto) : Promise<Employee>{
+        return await this.employeeRepository.update(employeeUpdateDto);
     }
 
 

@@ -1,5 +1,5 @@
 import { Body, Controller, Get, NotFoundException, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
-import { Employee } from './employees.model';
+import { Employee } from './schemas/employees.model';
 import { EmployeesService } from './employees.service';
 import { EmployeeCreateDto } from './dto/EmployeeCreate';
 import { EmployeeUpdateDto } from './dto/EmployeeUpdateDto'
@@ -11,28 +11,29 @@ export class EmployeesController {
     constructor(private employeeService:EmployeesService){}
 
     @Get()
-    getAllEmployees(){
-        return this.employeeService.getAllEmployees();
+    async getAllEmployees(){
+        return await this.employeeService.getAllEmployees();
     }
 
     @Post()
     @UsePipes(ValidationPipe)
     @UsePipes(new EmployeeTireValidationPipe)
-    createEmployee(@Body() employeeCreateDto:EmployeeCreateDto): Employee{
-        return this.employeeService.createEmployee(employeeCreateDto);
+    async createEmployee(@Body() employeeCreateDto:EmployeeCreateDto): Promise<Employee>{
+        return await this.employeeService.createEmployee(employeeCreateDto);
     }
 
     @Get('/:id')
-    getEmployeeById(@Param('id') id: string){
-        const employee = this.employeeService.getEmployeeById(id);
+    async getEmployeeById(@Param('id') id: string){
+        const employee = await this.employeeService.getEmployeeById(id);
+        console.log(employee);
         if(!employee){
             throw new NotFoundException(`${id} is not exist`);
         }
-        return employee;
+        return await employee;
     }
 
     @Put()
-    updateEmployee(@Body() employeeUpdateDto:EmployeeUpdateDto): Employee{
-        return this.employeeService.updateEmployee(employeeUpdateDto);
+    async updateEmployee(@Body() employeeUpdateDto:EmployeeUpdateDto): Promise<Employee>{
+        return await this.employeeService.updateEmployee(employeeUpdateDto);
     }
 }
