@@ -1,4 +1,3 @@
-import { EmployeeStatus, EmployeeTier } from '../employees.model';
 
 export class EmployeeUpdateDto{
     id: string

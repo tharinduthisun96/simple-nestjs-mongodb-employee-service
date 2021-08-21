@@ -1,3 +1,5 @@
+import { EmployeeStatus, EmployeeTier } from "./enum/employee.enum";
+
 export interface Employee{
     id: string,
     firstName: string
@@ -9,14 +11,3 @@ export interface Employee{
 }
 
 
-export enum  EmployeeTier{
-    TIER_ONE = 'TIER_ONE',
-    TIER_TWO = 'TIER_TWO', 
-    TIER_THREE = 'TIER_THREE'  
-}
-
-export enum EmployeeStatus {
-    ACTIVE = 'ACTIVE',
-    SUSPENDED = 'SUSPENDED',
-    RESIGNED = 'RESIGNED'
-}

@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { EmployeeCreateDto } from './dto/EmployeeCreate';
 import { EmployeeUpdateDto } from './dto/EmployeeUpdateDto';
-import { Employee, EmployeeStatus, EmployeeTier } from './employees.model';
+import { Employee } from './employees.model';
+import { EmployeeStatus } from './enum/employee.enum';
 import {v1 as uuid} from 'uuid';
 
 @Injectable()
