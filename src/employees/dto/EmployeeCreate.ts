@@ -1,4 +1,4 @@
-import { IsEmpty, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 import { EmployeeTier } from '../employees.model';
 
 export class EmployeeCreateDto{

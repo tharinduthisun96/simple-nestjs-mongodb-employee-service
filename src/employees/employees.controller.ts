@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Employee } from './employees.model';
 import { EmployeesService } from './employees.service';
 import { EmployeeCreateDto } from './dto/EmployeeCreate';
 import { EmployeeUpdateDto } from './dto/EmployeeUpdateDto'
-import { EmployeeTireValidationPipe } from 'src/employee-tire-validation.pipe';
+import { EmployeeTireValidationPipe } from 'src/employees/validation/employee-tire-validation.pipe';
 
 @Controller('employees')
 export class EmployeesController {
@@ -24,7 +24,11 @@ export class EmployeesController {
 
     @Get('/:id')
     getEmployeeById(@Param('id') id: string){
-        return this.employeeService.getEmployeeById(id);
+        const employee = this.employeeService.getEmployeeById(id);
+        if(!employee){
+            throw new NotFoundException(`${id} is not exist`);
+        }
+        return employee;
     }
 
     @Put()
