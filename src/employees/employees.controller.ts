@@ -23,13 +23,13 @@ export class EmployeesController {
     }
 
     @Get('/:id')
-    async getEmployeeById(@Param('id') id: string){
-        const employee = await this.employeeService.getEmployeeById(id);
-        console.log(employee);
-        if(!employee){
+    async getEmployeeById(@Param('id') id: string): Promise<Employee>{
+        try {
+            const employee = await this.employeeService.getEmployeeById(id);
+            return await employee;
+        }catch(e){
             throw new NotFoundException(`${id} is not exist`);
         }
-        return await employee;
     }
 
     @Put()
